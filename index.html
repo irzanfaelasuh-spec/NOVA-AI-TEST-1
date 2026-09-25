@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#070910">
+
+  <title>NOVA AI X</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- BACKGROUND VFX -->
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="grid-vfx"></div>
+
+  <div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+
+        <div class="brand-orb">
+          ✦
+        </div>
+
+        <div class="brand-text">
+          <strong>NOVA AI X</strong>
+          <span>Gemini Neural Interface</span>
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="new-chat"
+        id="newChat"
+      >
+        <span>＋</span>
+        <b>New chat</b>
+      </button>
+
+
+      <div class="history-heading">
+        RECENT
+      </div>
+
+
+      <div
+        class="history"
+        id="history"
+      ></div>
+
+
+      <div class="sidebar-bottom">
+
+        <button
+          type="button"
+          class="side-button"
+          id="openSettings"
+        >
+          <span>⚙</span>
+          Settings
+        </button>
+
+
+        <button
+          type="button"
+          class="side-button"
+          id="clearHistory"
+        >
+          <span>⌫</span>
+          Clear history
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <header class="topbar">
+
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+        >
+          ☰
+        </button>
+
+
+        <div class="model-pill">
+
+          <span class="live-dot"></span>
+
+          <span id="modelName">
+            Random model
+          </span>
+
+        </div>
+
+
+        <div class="top-actions">
+
+          <button
+            type="button"
+            class="icon-button"
+            id="focusBtn"
+            title="Fullscreen"
+          >
+            ⛶
+          </button>
+
+
+          <button
+            type="button"
+            class="icon-button"
+            id="settingsBtn"
+            title="Settings"
+          >
+            ⚙
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <!-- ================= CHAT ================= -->
+
+      <section
+        class="chat"
+        id="chat"
+      >
+
+        <!-- WELCOME -->
+
+        <div
+          class="welcome"
+          id="welcome"
+        >
+
+          <div class="hero-orb">
+            <span>✦</span>
+          </div>
+
+
+          <h1>
+            What can I help you build?
+          </h1>
+
+
+          <p>
+            NOVA AI X connects to Gemini,
+            automatically finds available text models,
+            and randomly selects one for your conversation.
+          </p>
+
+
+          <div class="quick-grid">
+
+            <button
+              type="button"
+              class="quick"
+              data-prompt="Explain this topic to me simply and clearly."
+            >
+              <span>◈</span>
+              <b>Learn something</b>
+            </button>
+
+
+            <button
+              type="button"
+              class="quick"
+              data-prompt="Help me create clean HTML, CSS and JavaScript."
+            >
+              <span>⌘</span>
+              <b>Build code</b>
+            </button>
+
+
+            <button
+              type="button"
+              class="quick"
+              data-prompt="Give me 10 creative ideas for a new project."
+            >
+              <span>✦</span>
+              <b>Brainstorm</b>
+            </button>
+
+
+            <button
+              type="button"
+              class="quick"
+              data-prompt="Summarize the important points clearly."
+            >
+              <span>≡</span>
+              <b>Summarize</b>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- MESSAGES -->
+
+        <div
+          class="messages"
+          id="messages"
+        ></div>
+
+      </section>
+
+
+      <!-- ================= COMPOSER ================= -->
+
+      <footer class="composer-area">
+
+        <div class="composer">
+
+          <textarea
+            id="prompt"
+            rows="1"
+            maxlength="20000"
+            placeholder="ASK ANYTHING..."
+          ></textarea>
+
+
+          <div class="composer-bottom">
+
+            <span class="composer-hint">
+              Enter to send · Shift+Enter for new line
+            </span>
+
+
+            <button
+              type="button"
+              id="sendBtn"
+              class="send-button"
+            >
+              Send
+              <span>➤</span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="footer-note">
+          NOVA AI X can make mistakes. Check important information.
+        </div>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <!-- ================= OVERLAY ================= -->
+
+  <div
+    class="overlay"
+    id="overlay"
+  ></div>
+
+
+  <!-- ================= SETTINGS ================= -->
+
+  <aside
+    class="settings-panel"
+    id="settingsPanel"
+  >
+
+    <div class="settings-header">
+
+      <div>
+        <strong>Settings</strong>
+        <span>Control your NOVA experience</span>
+      </div>
+
+
+      <button
+        type="button"
+        class="close-button"
+        id="closeSettings"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="settings-scroll">
+
+
+      <!-- API KEY -->
+
+      <section class="setting-card api-card">
+
+        <div class="setting-title">
+          API KEY GEMINI
+        </div>
+
+
+        <div class="api-row">
+
+          <input
+            id="apiKey"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste your Gemini API key"
+          >
+
+
+          <button
+            type="button"
+            id="saveKey"
+            class="save-button"
+          >
+            SAVE
+          </button>
+
+        </div>
+
+
+        <div
+          class="api-status"
+          id="apiStatus"
+        >
+          Not connected
+        </div>
+
+
+        <div class="selected-model">
+
+          <span>
+            Selected model
+          </span>
+
+          <strong id="selectedModel">
+            Random models
+          </strong>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="secondary-button full"
+          id="refreshModel"
+        >
+          ↻ Find random model
+        </button>
+
+      </section>
+
+
+      <!-- GENERATION -->
+
+      <section class="setting-card">
+
+        <div class="setting-title">
+          GENERATION
+        </div>
+
+
+        <label class="range-title">
+          <span>Max output tokens</span>
+
+          <output id="tokenValue">
+            1024
+          </output>
+        </label>
+
+
+        <input
+          id="tokens"
+          class="range"
+          type="range"
+          min="128"
+          max="8192"
+          step="128"
+          value="1024"
+        >
+
+
+        <div class="range-info">
+          <span>128 · economical</span>
+          <span>8192 · longer</span>
+        </div>
+
+
+        <label class="range-title">
+          <span>Temperature</span>
+
+          <output id="temperatureValue">
+            0.70
+          </output>
+        </label>
+
+
+        <input
+          id="temperature"
+          class="range"
+          type="range"
+          min="0"
+          max="1.5"
+          step="0.05"
+          value="0.7"
+        >
+
+
+        <label class="range-title">
+          <span>Top P</span>
+
+          <output id="topPValue">
+            0.95
+          </output>
+        </label>
+
+
+        <input
+          id="topP"
+          class="range"
+          type="range"
+          min="0.1"
+          max="1"
+          step="0.05"
+          value="0.95"
+        />
+
+      </section>
+
+
+      <!-- BEHAVIOR -->
+
+      <section class="setting-card">
+
+        <div class="setting-title">
+          BEHAVIOR
+        </div>
+
+
+        <label class="normal-label">
+          System personality
+        </label>
+
+
+        <textarea
+          id="systemPrompt"
+          class="system-prompt"
+          rows="5"
+        >You are NOVA AI X, a helpful, intelligent and friendly AI assistant. Explain difficult things simply and clearly. Remember the conversation context and give useful answers.</textarea>
+
+
+        <label class="switch-row">
+
+          <span>
+            Remember chats locally
+          </span>
+
+          <input
+            id="remember"
+            type="checkbox"
+            checked
+          >
+
+          <i></i>
+
+        </label>
+
+
+        <label class="switch-row">
+
+          <span>
+            Typing animation
+          </span>
+
+          <input
+            id="typing"
+            type="checkbox"
+            checked
+          >
+
+          <i></i>
+
+        </label>
+
+
+        <label class="switch-row">
+
+          <span>
+            Sound effects
+          </span>
+
+          <input
+            id="sound"
+            type="checkbox"
+          >
+
+          <i></i>
+
+        </label>
+
+      </section>
+
+
+      <!-- INTERFACE -->
+
+      <section class="setting-card">
+
+        <div class="setting-title">
+          INTERFACE
+        </div>
+
+
+        <label class="normal-label">
+          Theme
+        </label>
+
+
+        <div class="theme-grid">
+
+          <button
+            type="button"
+            class="theme active"
+            data-theme="nova"
+          >
+            NOVA
+          </button>
+
+
+          <button
+            type="button"
+            class="theme"
+            data-theme="midnight"
+          >
+            MIDNIGHT
+          </button>
+
+
+          <button
+            type="button"
+            class="theme"
+            data-theme="mono"
+          >
+            MONO
+          </button>
+
+        </div>
+
+
+        <label class="switch-row">
+
+          <span>
+            Glow effects
+          </span>
+
+          <input
+            id="glow"
+            type="checkbox"
+            checked
+          >
+
+          <i></i>
+
+        </label>
+
+
+        <label class="switch-row">
+
+          <span>
+            Compact messages
+          </span>
+
+          <input
+            id="compact"
+            type="checkbox"
+          >
+
+          <i></i>
+
+        </label>
+
+
+        <button
+          type="button"
+          class="secondary-button full"
+          id="resetSettings"
+        >
+          Reset settings
+        </button>
+
+      </section>
+
+
+      <div class="settings-footer">
+        NOVA AI X · Local-first interface
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
